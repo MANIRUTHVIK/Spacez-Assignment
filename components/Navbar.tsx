@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Menu } from "lucide-react";
 
-const Navbar = () => {
+const Navbar = ({ onClickHandler }: any) => {
   return (
     <>
       <header className="flex justify-between items-center p-4 border-b">
@@ -12,7 +12,10 @@ const Navbar = () => {
           width={120}
           height={100}
         />
-        <button className="text-3xl font-bold text-[#9a5632]">
+        <button
+          className="text-3xl font-bold text-[#9a5632]"
+          onClick={() => onClickHandler("")}
+        >
           <Menu color="#9a5632" />
         </button>
       </header>
