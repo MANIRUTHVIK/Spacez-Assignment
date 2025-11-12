@@ -70,6 +70,7 @@ export default function Home() {
     <div className="min-h-screen bg-white max-w-sm mx-auto border rounded-lg relative">
       {/* Navbar */}
       <Navbar onClickHandler={showNavTab} />
+
       {/* Offers */}
       <div className="p-4">
         <h1 className="text-lg font-semibold mb-2 text-[#4B4E4B]">Offers</h1>
@@ -156,7 +157,7 @@ export default function Home() {
                       {coupon.code}
                     </h3>
                     <button
-                      onClick={() => handleAction(`${coupon.code} copied`)}
+                      onClick={() => handleAction(`${coupon.code} `)}
                       className="flex items-center gap-1 text-[#b6602e] text-sm font-medium"
                     >
                       <Copy size={16} />
@@ -254,7 +255,7 @@ export default function Home() {
                           </h3>
                         </div>
                         <button
-                          onClick={() => handleAction(`${g.name} collected`)}
+                          onClick={() => handleAction(`${g.name}`)}
                           className="text-[#b6602e] text-sm font-semibold hover:underline"
                         >
                           Collect
