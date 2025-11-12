@@ -22,6 +22,39 @@ export default function Home() {
     setTimeout(() => setMessage(""), 2000);
   };
 
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const sections = Array.from(
+      container.querySelectorAll("section")
+    ) as HTMLElement[];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveTab(
+              entry.target.id as "Coupons" | "Giftcards" | "PaymentOffers"
+            );
+          }
+        });
+      },
+      {
+        root: container,
+        threshold: 0.4,
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => {
+      sections.forEach((section) => observer.unobserve(section));
+    };
+  }, []);
+
   const toggleSignIn = () => {
     setMessage(`Sign in status changed`);
     setTimeout(() => setMessage(""), 2000);
@@ -73,7 +106,10 @@ export default function Home() {
               </a>
             ))}
           </div>
-          <div className="h-[60vh] no-scrollbar overflow-auto bg-[#ffffff]">
+          <div
+            ref={scrollContainerRef}
+            className="h-[60vh] no-scrollbar overflow-auto bg-[#ffffff]"
+          >
             {/* Section: Sitewide Coupons */}
 
             <section id="Coupons">
@@ -141,10 +177,10 @@ export default function Home() {
                 <div className="border rounded-lg shadow-sm bg-[#fdf9f7] p-4 max-w-md">
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="text-[#4B4E4B] font-medium text-sm">
+                      <p className="text-[#874B2C] font-medium text-sm">
                         Assured vouchers up to
                       </p>
-                      <p className="text-[#4B4E4B] font-extrabold text-2xl flex items-center gap-1">
+                      <p className="text-[#874B2C] font-extrabold text-2xl flex items-center gap-1">
                         ₹1000{" "}
                         <span className="text-yellow-400 text-lg">✨</span>
                       </p>
@@ -152,16 +188,13 @@ export default function Home() {
                         of trending brands
                       </p>
                     </div>
-
-                    {/* Gift card visuals */}
-                    <div className="relative shrink-0">
-                      <div className="absolute top-3 right-2 bg-linear-to-r from-blue-600 to-blue-500 text-white text-sm font-semibold rounded-md px-1 py-1 shadow-md">
-                        <h2 className="text-xs font-normal">₹400 Gift card</h2>
-                      </div>
-                      <div className="bg-linear-to-r from-orange-500 to-orange-400 text-white text-sm font-semibold rounded-md px-3 py-2 shadow-md">
-                        ₹500
-                        <div className="text-xs font-normal">Gift card</div>
-                      </div>
+                    <div>
+                      <Image
+                        src="https://res.cloudinary.com/dosz4fxdk/image/upload/v1762929525/download_1_xukyc6.png"
+                        alt="GiftCard"
+                        width={100}
+                        height={100}
+                      />
                     </div>
                   </div>
 
@@ -307,6 +340,7 @@ export default function Home() {
           </div>
         </div>
       )}
+      {/* No screen Presence */}
       {activeNav !== "Offers" && (
         <div className="flex flex-col items-center justify-center h-[80vh] p-3 ">
           <h1 className="text-sm  text-[#4B4E4B] m-4 text-center">
